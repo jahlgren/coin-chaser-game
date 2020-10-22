@@ -1,4 +1,4 @@
-import { EasyGameEngine } from './lib/EasyGameEngine/EasyGameEngine.js';
+import { EasyGameEngine } from './vendor/EasyGameEngine/EasyGameEngine.js';
 import { PlayScene } from './lib/MyGame/Scenes/PlayScene.js';
 
 const startScene = new PlayScene();

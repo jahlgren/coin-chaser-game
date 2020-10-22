@@ -31,6 +31,7 @@ export class EasyGameEngine {
     /**
      * Used to calculate frame deltaTime. **Don't touch this!** 
      * @type {number} 
+     * @private
      */
     this._previousTime = 0;
 
@@ -59,7 +60,7 @@ export class EasyGameEngine {
     }
     this.scene = scene;
     this.scene.game = this;
-    this.scene.begin();
+    this.scene.start();
   }
 
   /**
@@ -68,8 +69,10 @@ export class EasyGameEngine {
    * @private
    */
   _gameLoop(elapsedTime) {
-    const deltaTime = Math.min((this._previousTime - elapsedTime) / 1000.0, this.maxDeltaTime);
+    const deltaTime = Math.min((elapsedTime - this._previousTime) / 1000.0, this.maxDeltaTime);
     this._previousTime = elapsedTime;
+
+    this.canvas.clear();
 
     if(this.scene) {
       this.scene.update(deltaTime, elapsedTime);

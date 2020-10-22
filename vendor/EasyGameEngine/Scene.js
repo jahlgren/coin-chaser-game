@@ -1,4 +1,5 @@
 import { EasyGameEngine } from './EasyGameEngine.js';
+import { GameObject } from './GameObject.js';
 
 /** @abstract */
 export class Scene {
@@ -11,6 +12,12 @@ export class Scene {
      * @type {EasyGameEngine}
      */
     this.game = null;
+
+    /**
+     * Array for holding GameObject children.
+     * @type {gameObject[]}
+     */
+    this.children = [];
   }
 
   /**
@@ -38,10 +45,34 @@ export class Scene {
   }
 
   /**
-   * Called when the scene is added to the game.
+   * Adds a GameObject to the scene.
+   * @param {GameObject} child 
+   */
+  add(child) {
+    if(child.scene !== null) {
+      throw new Error("The child has already been added to a scene.");
+    }
+    this.children.push(child);
+    child.start();
+  }
+
+  /**
+   * Removes a GameObject from the scene.
+   * @param {GameObject} child 
+   */
+  remove(child) {
+    if(child.scene !== this) {
+      throw new Error("The child does not belong to this scene.");
+    }
+    this.children.splice(this.children.indexOf(child), 1);
+    child.end();
+  }
+
+  /**
+   * Called once when the scene is added to the game.
    * @virtual
    */
-  begin() { }
+  start() { }
 
   /**
    * Called when the scene is removed from the game.
@@ -53,14 +84,16 @@ export class Scene {
    * Used for game logic.
    * @param {number} deltaTime Time in seconds since last frame.
    * @param {number} elapsedTime Elapsed time since the game was started.
-   * @virtual
    */
-  update(deltaTime, elapsedTime) { }
+  update(deltaTime, elapsedTime) {
+    for(let i = 0; i < this.children.length; i++) {
+      this.children[i].update(deltaTime, elapsedTime);
+    }
+  }
 
   /**
    * Used for rendering the scene.
    * @param {CanvasRenderingContext2D} context 
-   * @virtual
    */
   render(context) { }
 }

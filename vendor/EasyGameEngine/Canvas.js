@@ -5,20 +5,14 @@ export class Canvas {
    * @param {number} height 
    */
   constructor(width, height) {
-    /**@type {HTMLCanvasElement} */
+    /** @type {HTMLCanvasElement} */
     this.element = document.createElement('canvas');
     this.element.classList.add('game-canvas');
 
     /** @type {CanvasRenderingContext2D} */
     this.context = this.element.getContext('2d');
 
-    // dpi, width and height will be initialized in setSize.
-    
-    /** 
-     * DPI of the screen.
-     * @type {number} 
-     */
-    this.dpi;
+    // width, height and dpi will be initialized in setSize.
     
     /**
      * Pixel width of the canvas.
@@ -39,8 +33,14 @@ export class Canvas {
      * @type {number} 
      */
     this.height;
+    
+    /** 
+     * DPI of the screen.
+     * @type {number} 
+     */
+    this.dpi;
 
-    // Initialize size of canvas.
+    // Initialize size of the canvas.
     this.setSize(width, height);
   }
 
@@ -65,5 +65,12 @@ export class Canvas {
 
     // Scale the context to match dpi.
     this.context.setTransform(this.dpi, 0, 0, this.dpi, 0, 0);
+  }
+
+  /**
+   * Clears the canvas.
+   */
+  clear() {
+    this.context.clearRect(0, 0, this.element.clientWidth, this.element.clientHeight);
   }
 }
