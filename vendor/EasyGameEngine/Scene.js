@@ -128,7 +128,7 @@ export class Scene {
 
     // Add children.
     while(this._addList.length > 0) {
-      child = this._addList.splice(0, 1)[0];
+      child = this._addList.shift();
       this.children.push(child);
       child.scene = this;
       child.start();
@@ -136,7 +136,7 @@ export class Scene {
 
     // Remove children.
     while(this._removeList.length > 0) {
-      child = this._removeList.splice(0, 1);
+      child = this._removeList.shift();
       this.children.splice(this.children.indexOf(child), 1)[0];
       child.end();
       child.scene = null;
