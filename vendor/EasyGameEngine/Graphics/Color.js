@@ -111,3 +111,35 @@ export class Color {
     this.string = `rgba(${this._r},${this._g},${this._b},${this._a})`;
   }
 }
+
+/**
+ * Default colors.
+ */
+export const Colors = {
+  black:      () => new Color(0, 0, 0, 1),
+  blue:       () => new Color(0, 0, 255, 1),
+  crimson:    () => new Color(220, 20, 60, 1),
+  cyan:       () => new Color(0, 255, 255, 1),
+  darkBlue:   () => new Color(0, 0, 139, 1),
+  darkGray:   () => new Color(80, 80, 80, 1),
+  darkGreen:  () => new Color(0, 100, 0, 1),
+  darkRed:    () => new Color(139, 0, 0, 1),
+  deepPink:   () => new Color(255, 20, 147, 1),
+  dodgerBlue: () => new Color(30, 144, 255, 1),
+  gold:       () => new Color(255, 215, 0, 1),
+  gray:       () => new Color(128, 128, 128, 1),
+  green:      () => new Color(0, 128, 0, 1),
+  indianRed:  () => new Color(205, 92, 92, 1),
+  lightBlue:  () => new Color(173, 216, 230, 1),
+  lightGray:  () => new Color(211, 211, 211, 1),
+  lightGreen: () => new Color(144, 238, 144, 1),
+  lightPink:  () => new Color(255, 182, 193, 1),
+  lime:       () => new Color(0, 255, 0, 1),
+  magenta:    () => new Color(255, 0, 255, 1),
+  orange:     () => new Color(255, 165, 0, 1),
+  pink:       () => new Color(255, 192, 203, 1),
+  purple:     () => new Color(128, 0, 128, 1),
+  red:        () => new Color(255, 0, 0, 1),
+  white:      () => new Color(255, 255, 255, 1),
+  yellow:     () => new Color(255, 255, 0, 1),
+}

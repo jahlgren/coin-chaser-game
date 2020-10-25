@@ -1,15 +1,18 @@
-import { Transform } from './Math/Transform.js';
+import { Transform } from './Geom/Transform.js';
+import { Vector2d } from './Geom/Vector2d.js';
 import { Graphic } from './Graphics/Graphic.js';
 import { Scene } from './Scene.js';
+import { Input } from './Input.js';
 
 export class GameObject {
   /**
    * Creates a new GameObject instance. It might be a good idea to create subclasses of GameObject.
-   * @param {Transform} transform 
+   * @param {number} x
+   * @param {number} y
    */
-  constructor(transform) {
+  constructor(x, y) {
     /** @type {Transform} */
-    this.transform = Transform.isTransform(transform) ? transform : new Transform();
+    this.transform = new Transform(new Vector2d(x, y));
     
     /** @type {Graphic} */
     this.graphic = null;
@@ -22,6 +25,18 @@ export class GameObject {
      * @type {Scene} 
      */
     this.scene = null;
+  }
+
+  /**
+   * Input to check keyboard and mouse state.
+   * ```js
+   * // Shorthand for:
+   * this.scene.game.input
+   * ```
+   * @returns {Input}
+   */
+  get input() {
+    return this.scene.game.input;
   }
 
   /**

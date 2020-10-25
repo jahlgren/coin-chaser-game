@@ -1,32 +1,35 @@
 import { Canvas } from "./Canvas.js"; 
 import { Scene } from './Scene.js';
+import { Input } from "./Input.js";
 
 export class EasyGameEngine {
   /**
    * Creates a new Game object that manages scenes.
    * @param {number} width Width of the game canvas.
    * @param {number} height Height of the game canvas.
-   * @param {Scene} scene Scene to start with.
    */
-  constructor(width, height, scene) {
+  constructor(width, height) {
     /** @type {Canvas} */
     this.canvas = new Canvas(width, height);
 
     /** 
-     * Active scene of the game.
-     * @type {Scene}
-     * ```js
-     * // Use setScene if you want to change the scene.
-     * game.setScene(nextScene);
-     * ```
+     * Input to check keyboard and mouse state.
+     * @type {Input} 
      */
-    this.scene;
+    this.input = new Input();
 
     /**
      * The maximum allowed deltaTime incase of lag spikes. 
      * @type {number} 
      */
     this.maxDeltaTime = 0.1;
+
+    /** 
+     * Active scene of the game.
+     * @type {Scene}
+     * @private
+     */
+    this._scene = null;
 
     /**
      * Used to calculate frame deltaTime. **Don't touch this!** 
@@ -39,28 +42,35 @@ export class EasyGameEngine {
     // the reference to this is lost when using requestAnimationFrame.
     this._gameLoop = this._gameLoop.bind(this);
 
-    // Set starting scene.
-    this.setScene(scene);
-
     // Start the game loop.
     requestAnimationFrame(this._gameLoop);
   }
 
   /**
-   * Set active scene.
+   * Active scene of the game.
+   * @type {Scene}
+   */
+  get scene() {
+    return this._scene;
+  }
+
+  /**
+   * Change scene.
    * @param {Scene} scene 
    */
-  setScene(scene) {
+  changeScene(scene) {
     if(scene.game !== null) {
       throw new Error("The given scene has already been added to a Game.");
     }
-    if(this.scene) {
-      this.scene.end();
-      this.scene.game = null;
+    // End currently active scene.
+    if(this._scene) {
+      this._scene.end();
+      this._scene.game = null;
     }
-    this.scene = scene;
-    this.scene.game = this;
-    this.scene.start();
+    // Set and start the new active scene.
+    this._scene = scene;
+    this._scene.game = this;
+    this._scene.start();
   }
 
   /**
@@ -69,16 +79,23 @@ export class EasyGameEngine {
    * @private
    */
   _gameLoop(elapsedTime) {
+    // Request next frame.
+    requestAnimationFrame(this._gameLoop);
+
+    // Calculate frame delta time.
     const deltaTime = Math.min((elapsedTime - this._previousTime) / 1000.0, this.maxDeltaTime);
     this._previousTime = elapsedTime;
 
+    // Update input.
+    this.input.update();
+
+    // Clear ancavas between renders.
     this.canvas.clear();
 
-    if(this.scene) {
-      this.scene.update(deltaTime, elapsedTime);
-      this.scene.render(this.canvas.context);
+    // Update and render scene.
+    if(this._scene) {
+      this._scene.update(deltaTime, elapsedTime / 1000.0);
+      this._scene.render(this.canvas.context);
     }
-
-    requestAnimationFrame(this._gameLoop);
   }
 }

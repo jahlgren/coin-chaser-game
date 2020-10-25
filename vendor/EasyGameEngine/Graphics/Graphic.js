@@ -1,4 +1,4 @@
-import { Transform } from "../Math/Transform.js";
+import { Transform } from "../Geom/Transform.js";
 
 /** @abstract */
 export class Graphic {
