@@ -89,7 +89,7 @@ export class EasyGameEngine {
     // Update input.
     this.input.update();
 
-    // Clear ancavas between renders.
+    // Clear canvas between renders.
     this.canvas.clear();
 
     // Update and render scene.
