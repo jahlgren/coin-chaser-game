@@ -113,7 +113,10 @@ export class Color {
 }
 
 /**
- * Default colors.
+ * Default colors. Example:
+ * ```js
+ * const color = Colors.crimson();
+ * ```
  */
 export const Colors = {
   black:      () => new Color(0, 0, 0, 1),

@@ -53,15 +53,18 @@ export class CircleShape extends Graphic {
     context.translate(transform.position.x, transform.position.y);
     context.scale(transform.scale.x, transform.scale.y);
 
+    // Set path.
     context.beginPath();
     context.arc(0, 0, this.radius, 0, TWO_PI);
     context.closePath();
 
+    // Fill if needed.
     if(this.useFill && this.color.a > 0) {
       context.fillStyle = this.color.string;
       context.fill();
     }
 
+    // Stroke if needed.
     if(this.useBorder && this.border.color.a > 0) {
       context.strokeStyle = this.border.color.string;
       context.lineWidth = this.border.width;
