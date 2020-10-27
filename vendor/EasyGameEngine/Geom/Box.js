@@ -14,6 +14,9 @@ export class Box {
     
     /** @type {Vector2d} */
     this.size = new Vector2d(width, height); 
+
+    /** @type {Vector2d} */
+    this.origin = new Vector2d(0, 0);
   }
 
   /**
@@ -32,10 +35,10 @@ export class Box {
    * @returns {boolean}
    */
   static overlapBox(first, second) {
-    const x1 = first.position.x - first.size.x / 2;
-    const y1 = first.position.y - first.size.y / 2;
-    const x2 = second.position.x - second.size.x / 2;
-    const y2 = second.position.y- second.size.y / 2;
+    const x1 = first.position.x - first.origin.x * first.size.x;
+    const y1 = first.position.y - first.origin.y * first.size.y;
+    const x2 = second.position.x - second.origin.x * second.size.x;
+    const y2 = second.position.y- second.origin.y * second.size.y;
     return (
       x1 < x2 + second.size.x &&
       x1 + first.size.x > x2 &&
