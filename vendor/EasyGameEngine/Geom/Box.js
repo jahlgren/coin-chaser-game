@@ -16,7 +16,7 @@ export class Box {
     this.size = new Vector2d(width, height); 
 
     /** @type {Vector2d} */
-    this.origin = new Vector2d(0, 0);
+    this.origin = new Vector2d(0.5, 0.5);
   }
 
   /**
